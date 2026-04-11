@@ -134,6 +134,58 @@ select * from teachers;
 -- rename table
 alter table subject rename to subjects;
 
+-- create a new table contains Outstanding_Students
+create table Outstanding_Students select * from Students where S_GPA>3.5;
+select * from Outstanding_Students;
+
+-- create a new table contains Failing_Students
+create table Failing_Students select * from Students where S_GPA<2.0;
+select * from Failing_Students;
+
+-- show student names that start with A
+select * from students where S_Name like 'A%';
+
+-- show student names that contain 4 char
+select * from students where S_name like '____';
+
+-- apply avg, min, max -> GPA
+select Avg(S_GPA) as 'avg gpa across students' from students ;
+select min(S_GPA) as 'min gpa across students' from students ;
+select max(S_GPA) as 'max gpa across students' from students ;
+
+-- show Outstanding_Students that has GPA>3.5 in level 6
+select * from Outstanding_Students where S_GPA>3.5 and S_level=6;
+
+-- show students that in level 5 and 25-26 years old
+select * from students where s_level=5 and year(curdate()) - year(S_birth) between 25 and 26;
+
+-- show count of students that in level 2
+select count(ID) from students where S_Level=2;
+
+-- show unique courses
+select Distinct S_course from Students;
+
+-- show subject names in upper case
+select upper(Sub_name) from Subjects;
+
+-- show avg gpa and Round the number to the nearest smaller number using numeric functions
+select floor(avg(S_GPA)) from students;
+
+-- update S_gender val to Male and Female 
+SET SQL_SAFE_UPDATES = 0;
+update students set S_Gender = 'Male' where S_Gender = 'M';
+-- error: S_Gender data type was varchar(1) .. solved:
+alter table students modify s_gender varchar(20);
+update students set S_Gender = 'Male' where S_Gender = '';
+select * from students;
+
+update Students set S_gender = 'Female' where S_gender='F';
+Select * from Students;
+
+-- increse failing_students gpa by 0.5
+update failing_students set S_GPA= s_gpa + 0.5;
+select S_GPA from failing_students;
+
 Select * from students;
 Select * from subjects;
 Select * from teachers;
